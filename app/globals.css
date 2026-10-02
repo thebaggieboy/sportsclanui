@@ -165,7 +165,7 @@ button {
 .hero h1 {
   max-width: 650px;
   margin: 26px 0 22px;
-  font-size: clamp(48px, 6vw, 74px);
+  font-size: 62px;
   font-weight: 700;
   letter-spacing: 1px;
   line-height: 1;
@@ -1053,6 +1053,124 @@ button {
   line-height: 1.8;
 }
 
+.about-main {
+  width: min(1120px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+.about-hero {
+  max-width: 780px;
+  padding: 110px 0 96px;
+}
+
+.about-hero h1 {
+  margin: 22px 0 18px;
+  color: var(--ink);
+  font-size: 62px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.08;
+}
+
+.about-hero h1 span {
+  color: var(--blue);
+}
+
+.about-hero p {
+  max-width: 570px;
+  margin: 0 0 25px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.about-reasons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.about-reason {
+  min-width: 0;
+  padding: 25px 28px 30px;
+}
+
+.about-reason:first-child {
+  padding-left: 0;
+}
+
+.about-reason + .about-reason {
+  border-left: 1px solid var(--line);
+}
+
+.about-reason-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.about-reason-top svg {
+  width: 22px;
+  height: 22px;
+}
+
+.about-reason h2 {
+  margin: 35px 0 10px;
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+.about-reason p {
+  max-width: 300px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.about-footer-band {
+  display: flex;
+  min-height: 260px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  margin: 88px 0;
+  padding: 40px 48px;
+  border-radius: 8px;
+  background: #f1f6ff;
+}
+
+.about-footer-band h2 {
+  margin: 15px 0 0;
+  color: var(--ink);
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  line-height: 1.15;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.about-link svg {
+  width: 16px;
+  height: 16px;
+}
+
 .site-footer {
   display: flex;
   width: min(1200px, calc(100% - 64px));
@@ -1109,8 +1227,13 @@ button {
 }
 
 @media (max-width: 850px) {
+  .site-header {
+    width: calc(100% - 40px);
+  }
+
   .header-nav {
     gap: 20px;
+    font-size: 10px;
   }
 
   .hero {
@@ -1119,7 +1242,7 @@ button {
   }
 
   .hero h1 {
-    font-size: clamp(45px, 7vw, 62px);
+    font-size: 52px;
   }
 
   .phone-card {
@@ -1127,7 +1250,17 @@ button {
   }
 
   .feature-band {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
     gap: 50px;
+  }
+
+  .event-summary {
+    min-width: 0;
+  }
+
+  .summary-detail > div {
+    min-width: 0;
+    font-size: 8px;
   }
 
   .download-band {
@@ -1138,6 +1271,14 @@ button {
   .faq-section {
     gap: 35px;
   }
+
+  .about-hero {
+    padding: 85px 0 70px;
+  }
+
+  .about-hero h1 {
+    font-size: 52px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1146,7 +1287,8 @@ button {
   .steps-section,
   .feature-section,
   .faq-section,
-  .site-footer {
+  .site-footer,
+  .about-main {
     width: calc(100% - 40px);
   }
 
@@ -1167,7 +1309,17 @@ button {
   }
 
   .header-nav {
+    display: flex;
+    gap: 0;
+    margin-right: 10px;
+  }
+
+  .header-nav a:not(:last-child) {
     display: none;
+  }
+
+  .header-nav a:last-child {
+    font-size: 10px;
   }
 
   .header-cta {
@@ -1184,10 +1336,16 @@ button {
     padding: 61px 0 47px;
   }
 
+  .steps-section,
+  .faq-section,
+  .site-footer {
+    width: calc(100% - 40px);
+  }
+
   .hero h1 {
     max-width: 450px;
     margin: 21px 0 17px;
-    font-size: clamp(45px, 13vw, 65px);
+    font-size: 42px;
   }
 
   .eyebrow,
@@ -1334,6 +1492,48 @@ button {
 
   .faq-section .section-title {
     margin-bottom: 0;
+    font-size: 28px;
+  }
+
+  .about-hero {
+    padding: 70px 0 55px;
+  }
+
+  .about-hero h1 {
+    font-size: 39px;
+  }
+
+  .about-hero p {
+    font-size: 12px;
+  }
+
+  .about-reasons {
+    grid-template-columns: 1fr;
+  }
+
+  .about-reason,
+  .about-reason:first-child {
+    padding: 20px 0 22px;
+  }
+
+  .about-reason + .about-reason {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .about-reason h2 {
+    margin-top: 18px;
+  }
+
+  .about-footer-band {
+    min-height: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 55px 0;
+    padding: 27px 22px;
+  }
+
+  .about-footer-band h2 {
     font-size: 28px;
   }
 

@@ -15,22 +15,23 @@ export default function Home() {
     <div className="site-shell">
       <header className="site-header">
         <a className="wordmark" href="#top" aria-label="SportsClan home">
-              SPORTCLAN
+      SPORTCLAN
         </a>
         <nav className="header-nav" aria-label="Main navigation">
           <a href="#how-it-works">How it works</a>
           <a href="#features">Features</a>
           <a href="#faq">FAQ</a>
+          <a href="/about">About</a>
         </nav>
         <a className="header-cta" href="#download">Get the app <ArrowRight aria-hidden="true" /></a>
       </header>
 
       <main id="top">
-        <section className="hero ">
+        <section className="hero">
           <div className="hero-copy">
-            <div className="eyebrow text-sm"><span className="eyebrow-mark" /> PLAY WITH YOUR FRIENDS</div>
+            <div className="eyebrow"><span className="eyebrow-mark" /> PLAY WITH YOUR FRIENDS</div>
             <h1>Pick a sport.<br /><span>Make it a game.</span></h1>
-            <p className="hero-description text-xs bold">Choose a sport and a local place to play. Set the price and number of spots, then invite your friends to join.</p>
+            <p className="hero-description">Choose a sport and a local place to play. Set the price and number of spots, then invite your friends to join.</p>
             <div className="store-links">
               <a className="store-button" href="https://apps.apple.com/us/search?term=SportsClan" target="_blank" rel="noreferrer">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.37 12.24c.02 2.17 1.9 2.89 1.92 2.9-.02.05-.3 1.04-.99 2.06-.6.88-1.23 1.75-2.22 1.77-.97.02-1.28-.57-2.39-.57s-1.46.55-2.38.59c-.95.03-1.68-.95-2.28-1.83-1.24-1.8-2.19-5.08-.92-7.3.63-1.1 1.76-1.8 2.98-1.82.93-.02 1.8.63 2.38.63.57 0 1.65-.78 2.78-.67.47.02 1.8.19 2.65 1.43-.07.05-1.58.92-1.57 2.81M14.54 6.2c.5-.6.84-1.43.75-2.26-.72.03-1.6.48-2.12 1.08-.47.54-.88 1.38-.77 2.18.8.06 1.63-.41 2.14-1" /></svg>
@@ -57,9 +58,9 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="section-ribbon text-xs" aria-label="Tournament planning made simple"><span>CHOOSE A SPORT</span><i /><span>PICK A PLACE</span><i /><span>SET YOUR SPOTS</span><i /><span>PLAY TOGETHER</span></div>
+        <div className="section-ribbon" aria-label="Tournament planning made simple"><span>CHOOSE A SPORT</span><i /><span>PICK A PLACE</span><i /><span>SET YOUR SPOTS</span><i /><span>PLAY TOGETHER</span></div>
 
-        <section className="steps-section text-xs" id="how-it-works">
+        <section className="steps-section" id="how-it-works">
           <div className="section-heading"><span className="section-kicker">MAKE A TOURNAMENT IN MINUTES</span><h2 className="section-title">Your game.<br /><span>Your rules.</span></h2><p className="section-description">Choose what to play, where to play, and how many friends can join.</p></div>
           <div className="steps-grid">
             <article className="step-card"><span className="step-number">01</span><span className="step-icon"><Trophy aria-hidden="true" /></span><h3>Choose a sport</h3><p>Pick basketball, football, tennis, or another sport. Give your tournament a name.</p><a className="step-link" href="#download">PICK YOUR SPORT <ArrowRight aria-hidden="true" /></a></article>
