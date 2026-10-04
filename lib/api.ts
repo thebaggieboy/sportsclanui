@@ -93,18 +93,49 @@ export interface Tournament {
   is_joined: boolean;
   my_slot: number | null;
   my_payment_status: "pending" | "paid" | "refunded" | "not_required" | null;
+  is_waitlisted: boolean;
+  waitlist_position: number | null;
   created_at: string;
   updated_at: string;
 }
 
 export interface TournamentEntry {
   id: number;
+  user_id: number;
   username: string;
   slot_number: number;
   entry_fee_at_join: string;
   payment_status: "pending" | "paid" | "refunded" | "not_required";
   reservation_expires_at: string | null;
   joined_at: string;
+  first_name: string;
+  last_name: string;
+}
+
+export interface PlayerProfile {
+  username: string;
+  first_name: string;
+  last_name: string;
+  bio: string;
+  preferred_sports: Sport[];
+  games_played: number;
+  completed_games: Tournament[];
+}
+
+export interface TournamentMessage {
+  id: number;
+  sender: string;
+  body: string;
+  created_at: string;
+}
+
+export interface UserNotification {
+  id: number;
+  kind: "spot_open" | "tournament_cancelled" | "host_announcement";
+  message: string;
+  tournament_id: number | null;
+  is_read: boolean;
+  created_at: string;
 }
 
 export class ApiError extends Error {

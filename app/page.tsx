@@ -68,10 +68,11 @@ export default function Home() {
             <div className="floating-note"><span className="floating-icon"><MapPin aria-hidden="true" /></span><span className="floating-copy"><strong>Play close by</strong><small>Pick a local court or field</small></span><ArrowRight aria-hidden="true" /></div>
           </div>
         </section>
-
+    
         <div className="section-ribbon" aria-label="Tournament planning made simple"><span>CHOOSE A SPORT</span><i /><span>PICK A PLACE</span><i /><span>SET YOUR SPOTS</span><i /><span>PLAY TOGETHER</span></div>
 
         <section className="steps-section" id="how-it-works">
+        
           <div className="section-heading"><span className="section-kicker">MAKE A TOURNAMENT IN MINUTES</span><h2 className="section-title">Your game.<br /><span>Your rules.</span></h2><p className="section-description">Choose what to play, where to play, and how many friends can join.</p></div>
           <div className="steps-grid">
             <article className="step-card"><span className="step-number">01</span><span className="step-icon"><Trophy aria-hidden="true" /></span><h3>Choose a sport</h3><p>Pick basketball, football, tennis, or another sport. Give your tournament a name.</p><a className="step-link" href="#download">PICK YOUR SPORT <ArrowRight aria-hidden="true" /></a></article>

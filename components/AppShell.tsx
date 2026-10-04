@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, CircleUserRound, Compass, Plus, Trophy } from "lucide-react";
+import { Bell, CalendarDays, CircleUserRound, Compass, Plus, Trophy } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { PropsWithChildren } from "react";
@@ -37,7 +37,7 @@ export default function AppShell({ children }: PropsWithChildren) {
         </div>
       </aside>
       <div className="app-main-wrap">
-        <header className="app-mobile-header"><Link className="app-brand" href="/"><span className="brand-symbol">S</span><span>SPORTSCLAN</span></Link><Link className="mobile-account" href="/account" aria-label="Account"><CircleUserRound aria-hidden="true" /></Link></header>
+        <header className="app-mobile-header"><Link className="app-brand" href="/"><span className="brand-symbol">S</span><span>SPORTSCLAN</span></Link><div className="mobile-header-actions"><Link className="mobile-account" href="/notifications" aria-label="Game updates"><Bell aria-hidden="true" /></Link><Link className="mobile-account" href="/account" aria-label="Account"><CircleUserRound aria-hidden="true" /></Link></div></header>
         <main className="app-main">
           {initializationError && <p className="form-error session-error" role="alert">{initializationError}</p>}
           {children}
