@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight, Handshake, Trophy, Users } from "lucide-react";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About SportsClan | Play together",
@@ -32,16 +33,16 @@ export default function AboutPage() {
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="wordmark" href="/" aria-label="SportsClan home">
+        <Link className="wordmark" href="/" aria-label="SportsClan home">
           <span className="brand-symbol">S</span> SPORTCLAN
-        </a>
+        </Link>
         <nav className="header-nav" aria-label="Main navigation">
-          <a href="/#how-it-works">How it works</a>
-          <a href="/#features">Features</a>
-          <a href="/#faq">FAQ</a>
-          <a href="/about" aria-current="page">About</a>
+          <Link href="/#how-it-works">How it works</Link>
+          <Link href="/#features">Features</Link>
+          <Link href="/#faq">FAQ</Link>
+          <Link href="/about" aria-current="page">About</Link>
         </nav>
-        <a className="header-cta" href="/#download">Get the app <ArrowRight aria-hidden="true" /></a>
+        <Link className="header-cta" href="/waitlist">Join the waitlist <ArrowRight aria-hidden="true" /></Link>
       </header>
 
       <main className="about-main">
@@ -51,7 +52,7 @@ export default function AboutPage() {
           <p>
             SportsClan makes hangouts more fun, gives friends a friendly way to settle sports debates, and helps groups run tournaments.
           </p>
-          <a className="header-cta" href="/#download">Get the app <ArrowRight aria-hidden="true" /></a>
+          <Link className="header-cta" href="/waitlist">Join the waitlist <ArrowRight aria-hidden="true" /></Link>
         </section>
 
         <section className="about-reasons" aria-label="What SportsClan is for">
@@ -69,17 +70,17 @@ export default function AboutPage() {
             <span className="section-kicker">YOUR NEXT GAME STARTS HERE</span>
             <h2>Pick a sport.<br />Get your people together.</h2>
           </div>
-          <a className="about-link" href="/#how-it-works">See how it works <ArrowRight aria-hidden="true" /></a>
+          <Link className="about-link" href="/#how-it-works">See how it works <ArrowRight aria-hidden="true" /></Link>
         </section>
       </main>
 
       <footer className="site-footer">
-        <a className="wordmark" href="/"><span className="brand-symbol">S</span> SPORTCLAN</a>
+        <Link className="wordmark" href="/"><span className="brand-symbol">S</span> SPORTCLAN</Link>
         <span>Pick a sport. Play together.</span>
         <nav className="footer-links" aria-label="Footer navigation">
-          <a href="/#how-it-works">How it works</a>
-          <a href="/#download">Get the app</a>
-          <a href="/about">About</a>
+          <Link href="/#how-it-works">How it works</Link>
+          <Link href="/waitlist">Join the waitlist</Link>
+          <Link href="/about">About</Link>
         </nav>
         <span className="copyright">© {new Date().getFullYear()} SPORTCLAN</span>
       </footer>

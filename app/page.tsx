@@ -9,6 +9,8 @@ import {
   Trophy,
   Wallet,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -18,16 +20,25 @@ export default function Home() {
       SPORTCLAN
         </a>
         <nav className="header-nav" aria-label="Main navigation">
+          <Link href="/tournaments">Find games</Link>
           <a href="#how-it-works">How it works</a>
           <a href="#features">Features</a>
           <a href="#faq">FAQ</a>
           <a href="/about">About</a>
         </nav>
-        <a className="header-cta" href="#download">Get the app <ArrowRight aria-hidden="true" /></a>
+        <Link className="header-cta" href="/tournaments/new">Create a game <ArrowRight aria-hidden="true" /></Link>
       </header>
 
       <main id="top">
         <section className="hero">
+          <Image
+            src="/field_3.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="hero-background"
+          />
           <div className="hero-copy">
             <div className="eyebrow"><span className="eyebrow-mark" /> PLAY WITH YOUR FRIENDS</div>
             <h1>Pick a sport.<br /><span>Make it a game.</span></h1>
@@ -79,7 +90,7 @@ export default function Home() {
         <section className="faq-section" id="faq"><div><span className="section-kicker">GOOD TO KNOW</span><h2 className="section-title">Quick answers.</h2></div><div className="faq-list"><details><summary>What is SportsClan? <ChevronDown aria-hidden="true" /></summary><p>SportsClan helps friends set up sports tournaments and meet to play.</p></details><details><summary>What can I set for a tournament? <ChevronDown aria-hidden="true" /></summary><p>Choose a sport, a local venue, the price per player, and the number of open spots.</p></details><details><summary>How do friends join? <ChevronDown aria-hidden="true" /></summary><p>Share your tournament. Friends can pick an open spot and see when and where to meet.</p></details></div></section>
       </main>
 
-      <footer className="site-footer"><a className="wordmark" href="#top"><span className="brand-symbol">S</span> SPORTCLAN</a><span>Pick a sport. Play together.</span><nav className="footer-links" aria-label="Footer navigation"><a href="#how-it-works">How it works</a><a href="#download">Get the app</a></nav><span className="copyright">© {new Date().getFullYear()} SPORTCLAN</span></footer>
+      <footer className="site-footer"><a className="wordmark" href="#top"><span className="brand-symbol">S</span> SPORTCLAN</a><span>Pick a sport. Play together.</span><nav className="footer-links" aria-label="Footer navigation"><Link href="/tournaments">Find games</Link><Link href="/account">Account</Link><Link href="/waitlist">Join the waitlist</Link></nav><span className="copyright">© {new Date().getFullYear()} SPORTCLAN</span></footer>
     </div>
   );
 }

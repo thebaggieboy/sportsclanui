@@ -18,6 +18,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## SportsClan web app
+
+The web app shares the Django API with the SportsClan mobile app. In development, start the backend at `http://127.0.0.1:8000` and the frontend at `http://localhost:3000`. Set `NEXT_PUBLIC_API_BASE_URL` in `.env.local` to override the API base URL (include `/api/v1`). Production defaults to the deployed SportsClan API; configure the backend `CORS_ALLOWED_ORIGINS` to allow the deployed website origin.
+
+The app provides account sign-in and registration, tournament browsing and creation, shareable tournament details, spot joining and payment verification, profile, and My Games. New web tournaments use a manually entered venue name, city, and coordinates, so creating one does not require a Google Maps API key.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
