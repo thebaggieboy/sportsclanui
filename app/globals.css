@@ -3457,7 +3457,7 @@ button {
     z-index: 6;
     inset: auto 0 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     min-height: 61px;
     padding: 5px 8px max(7px, env(safe-area-inset-bottom));
     border-top: 1px solid var(--line);

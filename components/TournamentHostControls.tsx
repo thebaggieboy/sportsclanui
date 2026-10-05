@@ -66,7 +66,7 @@ export default function TournamentHostControls({ tournament, onUpdated }: Tourna
   };
 
   const cancel = async () => {
-    if (!window.confirm("Cancel this game? Joined players and waitlisted players will be notified.")) return;
+    if (!window.confirm("Cancel this game? Players with pending or paid entries must first resolve their payment. Joined players and waitlisted players will be notified.")) return;
     setBusy(true);
     setError("");
     setNotice("");

@@ -10,6 +10,7 @@ const links = [
   { href: "/tournaments", label: "Find games", icon: Compass },
   { href: "/tournaments/new", label: "Create", icon: Plus },
   { href: "/my-games", label: "My games", icon: CalendarDays },
+  { href: "/notifications", label: "Updates", icon: Bell },
   { href: "/profile", label: "Profile", icon: CircleUserRound },
 ];
 
