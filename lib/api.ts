@@ -49,6 +49,7 @@ export interface Venue {
   name: string;
   venue_name: string;
   address: string;
+  postal_code: string;
   city: string;
   region: string;
   state: string;
@@ -89,7 +90,10 @@ export interface Tournament {
   slots_taken: number;
   slots_open: number;
   taken_slots: number[];
-  status: "open" | "full" | "cancelled" | "completed";
+  waitlist_offers: { offered_slot_number: number; offer_expires_at: string }[];
+  payments_enabled: boolean;
+  player_refund_deadline: string;
+  status: "open" | "full" | "cancelling" | "cancelled" | "completed";
   is_joined: boolean;
   my_slot: number | null;
   my_payment_status: "pending" | "paid" | "refunded" | "not_required" | null;
@@ -108,8 +112,20 @@ export interface TournamentEntry {
   payment_status: "pending" | "paid" | "refunded" | "not_required";
   reservation_expires_at: string | null;
   joined_at: string;
+  attendance_status: "unmarked" | "attended" | "no_show" | "excused";
+  attendance_confirmed: boolean;
+  attendance_disputed: boolean;
   first_name: string;
   last_name: string;
+}
+
+export interface PlayerReliability {
+  games_attended: number;
+  no_shows_reported: number;
+  attendance_disputes: number;
+  hosted_completed: number;
+  hosted_cancelled: number;
+  hosted_last_minute_cancellations: number;
 }
 
 export interface PlayerProfile {
@@ -119,6 +135,7 @@ export interface PlayerProfile {
   bio: string;
   preferred_sports: Sport[];
   games_played: number;
+  reliability: PlayerReliability;
   completed_games: Tournament[];
 }
 

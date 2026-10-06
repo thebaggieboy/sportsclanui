@@ -2132,7 +2132,7 @@ button {
 
 .game-filters {
   display: grid;
-  grid-template-columns: minmax(200px, 1fr) minmax(145px, 0.45fr) auto;
+  grid-template-columns: minmax(180px, 1fr) minmax(125px, 0.55fr) minmax(135px, 0.55fr) minmax(145px, 0.6fr) auto;
   gap: 9px;
 }
 
@@ -2664,6 +2664,51 @@ button {
   line-height: 1.7;
 }
 
+.reliability-card {
+  display: grid;
+  gap: 10px;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+}
+
+.reliability-card h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.reliability-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reliability-stats > span {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 5px;
+  background: #f4f7f3;
+}
+
+.reliability-stats strong {
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.reliability-stats small,
+.reliability-card > p {
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.reliability-card > p {
+  margin: 0;
+}
+
 .profile-link-list {
   display: grid;
   margin-top: 15px;
@@ -2755,6 +2800,346 @@ button {
 .field-hint {
   display: block;
   margin: -5px 0 0;
+}
+
+.osm-picker {
+  display: grid;
+  gap: 9px;
+}
+
+.osm-search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.osm-search-row input {
+  min-width: 0;
+}
+
+.osm-search-row .secondary-button {
+  min-height: 40px;
+  padding-inline: 12px;
+  font-size: 9px;
+}
+
+.osm-map,
+.map-picker-loading {
+  height: 340px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #eaf2ec;
+}
+
+.osm-map .leaflet-container {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: normal;
+}
+
+.osm-map .leaflet-control-attribution {
+  font-size: 8px;
+}
+
+.map-picker-loading {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.osm-location-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f8faf8;
+}
+
+.osm-location-toolbar > div {
+  display: grid;
+  gap: 5px;
+}
+
+.osm-location-toolbar strong {
+  color: var(--ink);
+  font-size: 9px;
+}
+
+.osm-location-toolbar small {
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.osm-location-toolbar button {
+  display: inline-flex;
+  min-height: 36px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-size: 8px;
+}
+
+.osm-location-toolbar button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.osm-location-toolbar button.is-tracking {
+  border-color: #a9cdb4;
+  background: #eaf2ec;
+  color: #245a37;
+}
+
+.osm-route-summary {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--blue-soft);
+  color: var(--ink);
+}
+
+.osm-route-summary > svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: var(--blue);
+}
+
+.osm-route-summary > span {
+  display: grid;
+  flex: 1;
+  gap: 4px;
+  font-size: 9px;
+}
+
+.osm-route-summary strong {
+  font-size: 10px;
+}
+
+.osm-route-summary button {
+  border: 0;
+  background: none;
+  color: var(--blue-dark);
+  font-size: 8px;
+}
+
+.game-view-toggle {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+}
+
+.game-view-toggle button {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.game-view-toggle button.selected {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  font-weight: 700;
+}
+
+.game-view-toggle svg {
+  width: 13px;
+  height: 13px;
+}
+
+.osm-selected-pin {
+  border: 0;
+  background: transparent;
+}
+
+.osm-selected-pin span {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  display: grid;
+  width: 28px;
+  height: 34px;
+  place-items: center;
+  clip-path: polygon(50% 100%, 5% 45%, 5% 23%, 17% 5%, 50% 0, 83% 5%, 95% 23%, 95% 45%);
+  background: var(--blue);
+  filter: drop-shadow(0 2px 3px rgb(19 35 63 / 35%));
+}
+
+.osm-selected-pin i {
+  width: 11px;
+  height: 11px;
+  margin-top: -8px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+.osm-game-pin {
+  border: 0;
+  background: transparent;
+}
+
+.osm-game-pin span {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  display: grid;
+  width: 26px;
+  height: 32px;
+  place-items: center;
+  clip-path: polygon(50% 100%, 5% 45%, 5% 23%, 17% 5%, 50% 0, 83% 5%, 95% 23%, 95% 45%);
+  background: #27824a;
+  filter: drop-shadow(0 2px 3px rgb(19 35 63 / 35%));
+}
+
+.osm-game-pin i {
+  width: 10px;
+  height: 10px;
+  margin-top: -7px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #27824a;
+}
+
+.osm-live-pin {
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(40 104 232 / 16%);
+  animation: osm-location-pulse 2s ease-out infinite;
+}
+
+.osm-live-pin span {
+  width: 13px;
+  height: 13px;
+  border: 3px solid white;
+  border-radius: 50%;
+  background: #2868e8;
+  box-shadow: 0 1px 5px rgb(19 35 63 / 45%);
+}
+
+@keyframes osm-location-pulse {
+  0% { box-shadow: 0 0 0 0 rgb(40 104 232 / 28%); }
+  70% { box-shadow: 0 0 0 9px rgb(40 104 232 / 0%); }
+  100% { box-shadow: 0 0 0 0 rgb(40 104 232 / 0%); }
+}
+
+.osm-game-popup {
+  display: grid;
+  min-width: 175px;
+  gap: 7px;
+  color: var(--ink);
+  font-family: "Poppins", sans-serif;
+  letter-spacing: normal;
+}
+
+.osm-game-popup strong {
+  font-size: 11px;
+}
+
+.osm-game-popup > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.osm-game-popup svg {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+}
+
+.osm-game-popup a,
+.osm-game-popup button {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 4px;
+  background: var(--blue);
+  color: white;
+  font-size: 9px;
+}
+
+.osm-game-popup button {
+  background: #27824a;
+}
+
+.osm-search-error {
+  margin: 0;
+  color: #b42318;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.osm-search-results {
+  display: grid;
+  max-height: 180px;
+  gap: 5px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.osm-search-results button {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: white;
+  color: var(--ink);
+  font-size: 9px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.osm-search-results button:hover {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.osm-attribution {
+  margin-top: -5px;
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.osm-attribution a {
+  color: var(--blue-dark);
+  text-decoration: underline;
+}
+
+.section-heading-row > div:first-child {
+  display: grid;
+  gap: 7px;
 }
 
 .form-grid {
@@ -3628,6 +4013,7 @@ button {
 
 .participant-row {
   display: flex;
+  flex-wrap: wrap;
   min-width: 0;
   align-items: center;
   gap: 9px;
@@ -3667,6 +4053,80 @@ button {
 .participant-copy small {
   color: var(--muted);
   font-size: 7px;
+}
+
+.attendance-badge {
+  padding: 5px 7px;
+  border-radius: 20px;
+  background: #eaf4ed;
+  color: #287657;
+  font-size: 7px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.attendance-badge.no_show,
+.attendance-badge.disputed {
+  background: #fff2e9;
+  color: #92521e;
+}
+
+.attendance-badge.excused {
+  background: #edf1f6;
+  color: #66758b;
+}
+
+.attendance-control select {
+  max-width: 148px;
+  min-height: 30px;
+  padding: 4px 7px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: white;
+  color: var(--ink);
+  font-size: 8px;
+}
+
+.attendance-confirm-button {
+  min-height: 30px;
+  padding: 0 8px;
+  border: 1px solid #cce0d1;
+  border-radius: 4px;
+  background: #eaf4ed;
+  color: #245a37;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.attendance-confirm-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.attendance-policy-note,
+.attendance-dispute-note {
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.6;
+}
+
+.attendance-policy-note {
+  margin: 10px 0 0;
+}
+
+.attendance-dispute-note {
+  width: 100%;
+  margin-left: 43px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
 }
 
 .participant-payment {

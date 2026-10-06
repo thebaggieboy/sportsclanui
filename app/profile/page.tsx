@@ -110,6 +110,17 @@ export default function ProfilePage() {
               </form>
             </section>}
             <div className="account-note"><strong>Games played · {profile.games_played}</strong><p>Completed games you joined will appear in your player history.</p></div>
+            <section className="reliability-card">
+              <h2>Reliability record</h2>
+              <div className="reliability-stats">
+                <span><strong>{profile.reliability.games_attended}</strong><small>Games host-reported attended</small></span>
+                <span><strong>{profile.reliability.no_shows_reported}</strong><small>Host-reported no-shows</small></span>
+                <span><strong>{profile.reliability.hosted_completed}</strong><small>Games hosted and completed</small></span>
+                <span><strong>{profile.reliability.hosted_last_minute_cancellations}</strong><small>Hosted cancellations within 24 hours</small></span>
+              </div>
+              {profile.reliability.attendance_disputes > 0 && <p>{profile.reliability.attendance_disputes} disputed attendance record(s) are excluded from these counts.</p>}
+              <p>These are activity records, not automatic ratings or penalties.</p>
+            </section>
             <div className="profile-link-list"><Link href="/my-games"><CalendarDays aria-hidden="true" />My games<ArrowRight aria-hidden="true" /></Link><Link href="/notifications"><CalendarDays aria-hidden="true" />Game updates<ArrowRight aria-hidden="true" /></Link><Link href="/tournaments/new"><Plus aria-hidden="true" />Create a tournament<ArrowRight aria-hidden="true" /></Link></div>
             {profile.completed_games.length > 0 && <section className="profile-history"><div className="card-title-row"><h2>Game history</h2><span>{profile.completed_games.length} completed</span></div><div className="game-grid">{profile.completed_games.map((game) => <TournamentCard key={game.id} tournament={game} />)}</div></section>}
             <button className="secondary-button signout-button" type="button" onClick={signOut}><LogOut aria-hidden="true" />Sign out</button>

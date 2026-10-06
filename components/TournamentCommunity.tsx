@@ -3,6 +3,7 @@
 import { BellRing, Flag, MessageCircle, Users } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AppProviders";
 import type { Tournament, TournamentEntry, TournamentMessage } from "@/lib/api";
 
@@ -11,13 +12,18 @@ interface Participant extends TournamentEntry {
   last_name: string;
 }
 
+type AttendanceStatus = "unmarked" | "attended" | "no_show" | "excused";
+
 interface WaitlistEntry {
   id: number;
   position: number;
+  offered_slot_number: number | null;
+  offer_expires_at: string | null;
 }
 
 interface TournamentCommunityProps {
   tournament: Tournament;
+  onJoined: () => Promise<void>;
 }
 
 function initials(participant: Participant) {
@@ -25,8 +31,9 @@ function initials(participant: Participant) {
   return label.slice(0, 1).toUpperCase();
 }
 
-export default function TournamentCommunity({ tournament }: TournamentCommunityProps) {
+export default function TournamentCommunity({ tournament, onJoined }: TournamentCommunityProps) {
   const { user, request } = useAuth();
+  const router = useRouter();
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [messages, setMessages] = useState<TournamentMessage[]>([]);
   const [waitlist, setWaitlist] = useState<WaitlistEntry | null>(null);
@@ -37,9 +44,13 @@ export default function TournamentCommunity({ tournament }: TournamentCommunityP
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
+  const [attendanceBusyId, setAttendanceBusyId] = useState<number | null>(null);
   const isHost = Boolean(user && user.username === tournament.host);
   const canReadMessages = isHost || tournament.is_joined;
-  const canWaitlist = Boolean(user && !isHost && !tournament.is_joined && tournament.status === "full");
+  const canWaitlist = Boolean(
+    user && !isHost && !tournament.is_joined &&
+    (tournament.status === "full" || waitlist),
+  );
 
   const loadCommunity = useCallback(async () => {
     const roster = await request<Participant[]>(`/tournaments/${tournament.id}/participants/`);
@@ -101,6 +112,43 @@ export default function TournamentCommunity({ tournament }: TournamentCommunityP
     }
   };
 
+  const claimWaitlistOffer = async () => {
+    if (!waitlist?.offered_slot_number) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const entry = await request<TournamentEntry>(
+        `/tournaments/${tournament.id}/join/`,
+        {
+          method: "POST",
+          body: JSON.stringify({ slot_number: waitlist.offered_slot_number }),
+        },
+      );
+      if (entry.payment_status === "not_required") {
+        setWaitlist(null);
+        setNotice(`Spot ${entry.slot_number} is yours.`);
+        await onJoined();
+      } else {
+        router.push(`/tournaments/${tournament.id}/payment`);
+      }
+    } catch (cause) {
+      const joinError = cause instanceof Error ? cause.message : "Could not claim this spot.";
+      setError(joinError);
+      try {
+        const result = await loadCommunity();
+        setWaitlist(result.waitlist);
+      } catch (refreshCause) {
+        const refreshError = refreshCause instanceof Error
+          ? refreshCause.message
+          : "Could not refresh the waitlist offer.";
+        setError(`${joinError} ${refreshError}`);
+      }
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const sendAnnouncement = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setBusy(true);
@@ -143,6 +191,52 @@ export default function TournamentCommunity({ tournament }: TournamentCommunityP
     }
   };
 
+  const markAttendance = async (participantId: number, attendanceStatus: AttendanceStatus) => {
+    setAttendanceBusyId(participantId);
+    setError("");
+    setNotice("");
+    try {
+      const roster = await request<Participant[]>(`/tournaments/${tournament.id}/attendance/`, {
+        method: "POST",
+        body: JSON.stringify({
+          participants: [{ participant_id: participantId, attendance_status: attendanceStatus }],
+        }),
+      });
+      setParticipants(roster);
+      setNotice("Attendance record saved.");
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not save attendance.");
+    } finally {
+      setAttendanceBusyId(null);
+    }
+  };
+
+  const confirmAttendance = async () => {
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const updated = await request<Participant>(
+        `/tournaments/${tournament.id}/confirm-attendance/`,
+        { method: "POST" },
+      );
+      setParticipants((current) =>
+        current.map((participant) =>
+          participant.user_id === updated.user_id ? updated : participant,
+        ),
+      );
+      setNotice(
+        updated.attendance_disputed
+          ? "Your attendance confirmation was submitted. This record is disputed and excluded from reliability counts pending review."
+          : "Thanks for confirming you attended.",
+      );
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not confirm attendance.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <>
       <section className="detail-card community-card">
@@ -166,6 +260,43 @@ export default function TournamentCommunity({ tournament }: TournamentCommunityP
                   <span className={`participant-payment ${participant.payment_status}`}>
                     {participant.payment_status === "not_required" || participant.payment_status === "paid" ? "Confirmed" : participant.payment_status === "pending" ? "Payment pending" : "Refunded"}
                   </span>
+                  {participant.attendance_disputed ? (
+                    <span className="attendance-badge disputed">Attendance disputed</span>
+                  ) : participant.attendance_status !== "unmarked" ? (
+                    <span className={`attendance-badge ${participant.attendance_status}`}>
+                        {participant.attendance_status === "no_show" ? "Host-reported no-show" : participant.attendance_status === "attended" ? "Attended" : "Excused"}
+                    </span>
+                  ) : null}
+                  {isHost && tournament.status === "completed" && (
+                    <label className="attendance-control">
+                      <span className="visually-hidden">Attendance for {name}</span>
+                      <select
+                        aria-label={`Record attendance for ${name}`}
+                        value={participant.attendance_status}
+                        disabled={attendanceBusyId === participant.id || participant.attendance_disputed}
+                        onChange={(event) =>
+                          void markAttendance(participant.id, event.target.value as AttendanceStatus)
+                        }
+                      >
+                        <option value="unmarked">Mark attendance…</option>
+                        <option value="attended">Attended</option>
+                        <option value="no_show">No-show reported</option>
+                        <option value="excused">Excused</option>
+                      </select>
+                    </label>
+                  )}
+                  {!isHost &&
+                    user?.id === participant.user_id &&
+                    tournament.status === "completed" &&
+                    (participant.payment_status === "paid" || participant.payment_status === "not_required") &&
+                    !participant.attendance_confirmed && (
+                      <button className="attendance-confirm-button" type="button" disabled={busy} onClick={() => void confirmAttendance()}>
+                        I attended
+                      </button>
+                    )}
+                  {!isHost && user?.id === participant.user_id && participant.attendance_disputed && (
+                    <small className="attendance-dispute-note">Your confirmation is awaiting review.</small>
+                  )}
                   {user && user.id !== participant.user_id && (
                     <button
                       className="icon-quiet-button"
@@ -180,10 +311,23 @@ export default function TournamentCommunity({ tournament }: TournamentCommunityP
             })}
           </div>
         ) : <p className="community-empty">No confirmed players yet. Be the first to grab a spot.</p>}
+        {isHost && tournament.status === "completed" && (
+          <p className="attendance-policy-note">
+            Attendance is a host report, not an automatic penalty. Players can confirm they attended; disputed reports are excluded from reliability counts.
+          </p>
+        )}
         {canWaitlist && (
           <div className="waitlist-action">
             {waitlist ? (
-              <><p>You’re on the waitlist at position <strong>{waitlist.position}</strong>.</p><button className="secondary-button" disabled={busy} onClick={() => void leaveWaitlist()}>Leave waitlist</button></>
+              <>
+                {waitlist.offered_slot_number && waitlist.offer_expires_at ? (
+                  <>
+                    <p>Spot <strong>{waitlist.offered_slot_number}</strong> is reserved for you until {new Date(waitlist.offer_expires_at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}.</p>
+                    <button className="primary-button" disabled={busy} onClick={() => void claimWaitlistOffer()}>{busy ? "Claiming…" : "Claim your spot"}</button>
+                  </>
+                ) : <p>You’re on the waitlist at position <strong>{waitlist.position}</strong>. We’ll offer the next available spot to you for 15 minutes when your turn arrives.</p>}
+                <button className="secondary-button" disabled={busy} onClick={() => void leaveWaitlist()}>Leave waitlist</button>
+              </>
             ) : (
               <><p>All spots are claimed. Join the queue and we’ll notify you if one opens.</p><button className="secondary-button" disabled={busy} onClick={() => void joinWaitlist()}>{busy ? "Joining…" : "Join waitlist"}</button></>
             )}

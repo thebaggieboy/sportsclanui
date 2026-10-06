@@ -66,7 +66,7 @@ export default function TournamentHostControls({ tournament, onUpdated }: Tourna
   };
 
   const cancel = async () => {
-    if (!window.confirm("Cancel this game? Players with pending or paid entries must first resolve their payment. Joined players and waitlisted players will be notified.")) return;
+    if (!window.confirm("Cancel this game? Paystack will be asked to refund paid players in full. If any refund is still processing, the game stays open until Paystack confirms it. Unpaid reservations must first expire or be released.")) return;
     setBusy(true);
     setError("");
     setNotice("");
@@ -75,7 +75,18 @@ export default function TournamentHostControls({ tournament, onUpdated }: Tourna
       setNotice("Tournament cancelled. Participants have been notified.");
       await onUpdated();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not cancel this tournament.");
+      const cancelError = cause instanceof Error
+        ? cause.message
+        : "Could not cancel this tournament.";
+      try {
+        await onUpdated();
+        setError(cancelError);
+      } catch (refreshCause) {
+        const refreshError = refreshCause instanceof Error
+          ? refreshCause.message
+          : "Could not refresh tournament status.";
+        setError(`${cancelError} ${refreshError}`);
+      }
     } finally {
       setBusy(false);
     }
@@ -98,8 +109,8 @@ export default function TournamentHostControls({ tournament, onUpdated }: Tourna
           <label>Entry fee ({tournament.currency})<input name="entry_fee" type="number" min="0" step="0.01" defaultValue={tournament.entry_fee} required /></label>
           <div className="host-edit-actions"><button type="button" className="secondary-button" disabled={busy} onClick={() => setEditing(false)}>Keep current</button><button className="primary-button" disabled={busy}>{busy ? "Saving…" : "Save changes"}</button></div>
         </form>
-      ) : <button className="secondary-button full-button" disabled={busy || tournament.status === "cancelled" || tournament.status === "completed"} onClick={() => setEditing(true)}>Edit game details</button>}
-      {tournament.status !== "cancelled" && tournament.status !== "completed" && <button className="danger-button" disabled={busy} onClick={() => void cancel()}>{busy ? "Please wait…" : "Cancel game & notify players"}</button>}
+      ) : <button className="secondary-button full-button" disabled={busy || tournament.status === "cancelling" || tournament.status === "cancelled" || tournament.status === "completed"} onClick={() => setEditing(true)}>Edit game details</button>}
+      {tournament.status !== "cancelled" && tournament.status !== "completed" && <button className="danger-button" disabled={busy} onClick={() => void cancel()}>{busy ? "Please wait…" : tournament.status === "cancelling" ? "Retry cancellation" : "Cancel game & notify players"}</button>}
       {(tournament.status === "open" || tournament.status === "full") && <button className="secondary-button full-button" disabled={busy} onClick={() => void complete()}>{busy ? "Please wait…" : "Mark game completed"}</button>}
     </section>
   );

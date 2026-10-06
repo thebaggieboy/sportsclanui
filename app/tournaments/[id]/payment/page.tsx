@@ -159,6 +159,8 @@ export default function TournamentPaymentPage() {
               <div className="payment-state success"><CheckCircle2 aria-hidden="true" /><strong>{paid ? "Payment verified. Your spot is secured." : "No payment is due. Your spot is secured."}</strong></div>
             ) : refunded ? (
               <div className="payment-state expired"><strong>This entry was refunded.</strong><p>Choose another available spot from the tournament page if you still want to join.</p></div>
+            ) : !tournament.payments_enabled ? (
+              <div className="payment-state expired"><strong>Paid checkout is paused.</strong><p>SportsClan is not collecting paid entries until organizer payouts are supported. Release this unpaid reservation and choose a free game instead.</p></div>
             ) : expired ? (
               <div className="payment-state expired"><strong>Reservation expired</strong><p>This unpaid spot hold has ended. Release it, then choose a currently available spot again.</p></div>
             ) : (
