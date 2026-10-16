@@ -93,7 +93,7 @@ export default function Home() {
 
       <footer className="site-footer"><a className="wordmark" href="#top"><span className="brand-symbol">S</span> SPORTCLAN</a><span>Pick a sport. Play together.</span><nav className="footer-links" aria-label="Footer navigation"><Link href="/tournaments">Find games</Link><Link href="/account">Account</Link><Link href="/waitlist">Join the waitlist</Link></nav><span className="copyright">© {new Date().getFullYear()} SPORTCLAN</span></footer>
       <a href="https://www.codehype.ai/product/sportsclan?utm_source=codehype_badge" target="_blank" rel="noopener noreferrer">
-  <img src="https://www.codehype.ai/badges/sportsclan.svg?variant=find-us&v=20" alt="Featured on CodeHype" width="180" height="65" loading="lazy" decoding="async" style="display:inline-block;border:0;width:100%;max-width:180px;height:auto;max-height:65px;" />
+  <img src="https://www.codehype.ai/badges/sportsclan.svg?variant=find-us&v=20" alt="Featured on CodeHype" width="180" height="65" loading="lazy" decoding="async" style={{ display: "inline-block", border: 0, width: "100%", maxWidth: 180, height: "auto", maxHeight: 65 }} />
 </a>
     </div>
   );
